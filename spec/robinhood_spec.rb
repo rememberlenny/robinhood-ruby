@@ -10,7 +10,8 @@ describe Robinhood do
 
   describe "setup the robinhood object and" do
     it "fail without config params" do
-      pending
+      @robinhood = Robinhood::REST::Client.new
+      expect(@robinhood).to eq nil
     end
 
     it "access a username and password param" do
