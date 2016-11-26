@@ -30,6 +30,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency('multi_json', '>= 1.3.0')
+  spec.add_dependency('builder', '>= 2.1.2')
+  spec.add_dependency('jwt', '~> 1.0')
+  spec.add_dependency('jruby-openssl') if RUBY_PLATFORM == 'java'
+  # Workaround for RBX <= 2.2.1, should be fixed in next version
+  spec.add_dependency('rubysl') if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
