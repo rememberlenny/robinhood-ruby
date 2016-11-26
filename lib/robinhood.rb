@@ -33,7 +33,7 @@ module Robinhood
       def initialize(*args)
 
         @username = args[0]
-        @auth_token = args[1]
+        @password = args[1]
 
         if @username.nil? || @password.nil?
           raise ArgumentError, 'Account username and password are required'
