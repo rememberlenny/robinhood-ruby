@@ -14,6 +14,17 @@ describe Robinhood do
         config = Robinhood::Util::ClientConfig.new
         expect(config.send(attribute)).to eq(value)
       end
+
+      it "can update the value for the attribute" do
+        config = Robinhood::Util::ClientConfig.new
+        config.send("#{attribute}=", "blah")
+        expect(config.send(attribute)).to eq("blah")
+      end
+
+      it "can set the value from a hash in the initializer" do
+        config = Robinhood::Util::ClientConfig.new(attribute => 'blah')
+        expect(config.send(attribute)).to eq("blah")
+      end
     end
   end
 
