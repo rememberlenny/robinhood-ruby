@@ -38,6 +38,9 @@ module Robinhood
         if @username.nil? || @password.nil?
           raise ArgumentError, 'Account username and password are required'
         end
+
+        set_up_connection
+        set_up_subresources
       end
 
       protected
