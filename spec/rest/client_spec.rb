@@ -12,10 +12,15 @@ describe Robinhood::REST::Client do
     end
 
     it "access a username and password param" do
-      @robinhood = Robinhood::REST::Client.new(username, password)
+      Robinhood.configure do |config|
+        config.username = 'someSid'
+        config.password = 'someToken'
+      end
 
-      expect(@config.username).to be_a String
-      expect(@config.username).to eq username
+      client = Robinhood::REST::Client.new
+
+      expect(client.username).to be_a String
+      expect(client.username).to eq 'someSid'
     end
 
     it "get the access token from the api and store the access token as a local variable" do
