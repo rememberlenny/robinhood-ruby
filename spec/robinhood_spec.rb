@@ -10,7 +10,7 @@ describe Robinhood do
 
   describe "setup the Robinhood::Utils::ClientConfig" do
     Robinhood::Util::ClientConfig::DEFAULTS.each do |attribute, value|
-      it "sets and attribune with a default value" do
+      it "sets and attribune with a " + attribute.to_s + " value" do
         config = Robinhood::Util::ClientConfig.new
         expect(config.send(attribute)).to eq(value)
       end
