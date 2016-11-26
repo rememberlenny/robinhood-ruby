@@ -22,15 +22,11 @@ describe Robinhood do
       expect(@robinhood.password).to eq password
     end
 
-    it "get the access token from the api" do
+    it "get the access token from the api and store the access token as a local variable" do
       FakeWeb.register_uri(:get, "https://api.robinhood.com/api-token-auth/", :body => {"token"=>"1234567890"})
       @robinhood = Robinhood::REST::Client.new username, password 
       expect(@robinhood.token).to be_a String
       expect(@robinhood.token).to eq '1234567890'
-    end
-
-    it "store the access token as a local variable" do
-      pending
     end
   end
 
