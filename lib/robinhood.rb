@@ -31,6 +31,9 @@ module Robinhood
   module REST
     class Client
       def initialize(*args)
+        options = args.last.is_a?(Hash) ? args.pop : {}
+        options[:host]
+        @config = Robinhood::Util::ClientConfig.new options
 
         @username = args[0]
         @password = args[1]
