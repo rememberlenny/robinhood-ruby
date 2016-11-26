@@ -30,6 +30,28 @@ module Robinhood
   end
   module REST
     class Client
+      include Twilio::Util
+      include Twilio::REST::Utils
+
+      HTTP_HEADERS = {
+        'Accept' => '*/*',
+        'Accept-Encoding' => 'gzip, deflate',
+        'Accept-Language' => 'en;q=1, fr;q=0.9, de;q=0.8, ja;q=0.7, nl;q=0.6, it;q=0.5',
+        'Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8',
+        'X-Robinhood-API-Version' => '1.0.0',
+        'Connection' => 'keep-alive',
+        'User-Agent' => 'Robinhood/823 (iPhone; iOS 7.1.2; Scale/2.00)'
+      }
+
+      ##
+      # Override the default host for a REST Client (api.twilio.com)
+      def self.host(host=nil)
+        return @host unless host
+        @host = host
+      end
+
+      attr_reader :username, :last_request, :last_response
+
       def initialize(*args)
         options = args.last.is_a?(Hash) ? args.pop : {}
         options[:host]
@@ -42,8 +64,29 @@ module Robinhood
           raise ArgumentError, 'Account username and password are required'
         end
 
+        @config.username = @username
+
         set_up_connection
         set_up_subresources
+      end
+
+      ##
+      # Define #get, #put, #post and #delete helper methods for sending HTTP
+      # requests to Twilio. You shouldn't need to use these methods directly,
+      # but they can be useful for debugging. Each method returns a hash
+      # obtained from parsing the JSON object in the response body.
+      [:get, :put, :post, :delete].each do |method|
+        method_class = Net::HTTP.const_get method.to_s.capitalize
+        define_method method do |path, *args|
+          params = twilify(args[0])
+          params = {} if params.empty?
+          # build the full path unless already given
+          path = build_full_path(path, params, method) unless args[1]
+          request = method_class.new(path, HTTP_HEADERS)
+          request.basic_auth(@username, @auth_token)
+          request.form_data = params if [:post, :put].include?(method)
+          connect_and_send(request)
+        end
       end
 
       protected

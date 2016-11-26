@@ -14,10 +14,9 @@ describe Robinhood do
 
     it "access a username and password param" do
       @robinhood = Robinhood::REST::Client.new(username, password)
-      expect(@robinhood.username).to be_a String
-      expect(@robinhood.username).to eq username
-      expect(@robinhood.password).to be_a String
-      expect(@robinhood.password).to eq password
+
+      expect(@config.username).to be_a String
+      expect(@config.username).to eq username
     end
 
     it "get the access token from the api and store the access token as a local variable" do
