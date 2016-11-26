@@ -1,5 +1,35 @@
+require 'net/http'
+require 'net/https'
+require 'builder'
+require 'multi_json'
+require 'cgi'
+require 'openssl'
+require 'base64'
+require 'forwardable'
+require 'jwt'
 require 'singleton'
+
 require "robinhood/version"
+
+module Robinhood
+  extend SingleForwardable
+
+  def_delegators :configuration, :username, :password
+
+  ##
+  # Pre-configure with account SID and auth token so that you don't need to
+  # pass them to various initializers each time.
+  def self.configure(&block)
+    yield configuration
+  end
+
+  ##
+  # Returns an existing or instantiates a new configuration object.
+  def self.configuration
+    @configuration ||= Util::Configuration.new
+  end
+  private_class_method :configuration
+end
 
 module Robinhood
   module Util
@@ -125,8 +155,9 @@ module Robinhood
         options[:host]
         @config = Robinhood::Util::ClientConfig.new options
 
-        @username = args[0]
-        @password = args[1]
+        @username = args[0] || Robinhood.username
+        @password = args[1] || Robinhood.password
+        @username = (args.size > 2 && args[2].is_a?(String) ? args[2] : args[0]) || Robinhood.username
 
         if @username.nil? || @password.nil?
           raise ArgumentError, 'Account username and password are required'
@@ -151,7 +182,7 @@ module Robinhood
           # build the full path unless already given
           path = build_full_path(path, params, method) unless args[1]
           request = method_class.new(path, HTTP_HEADERS)
-          request.basic_auth(@username, @auth_token)
+          request.basic_auth(@username, @password)
           request.form_data = params if [:post, :put].include?(method)
           connect_and_send(request)
         end
@@ -255,38 +286,7 @@ module Robinhood
         super(*args)
       end
 
-      def inspect # :nodoc:
-        "<Robinhood::REST::Client @account_sid=#{@account_sid}>"
-      end
-
-      ##
-      # Delegate account methods from the client. This saves having to call
-      # <tt>client.account</tt> every time for resources on the default
-      # account.
-      def method_missing(method_name, *args, &block)
-        if account.respond_to?(method_name)
-          account.send(method_name, *args, &block)
-        else
-          super
-        end
-      end
-
-      def respond_to?(method_name, include_private=false)
-        if account.respond_to?(method_name, include_private)
-          true
-        else
-          super
-        end
-      end
-
       protected
-
-      ##
-      # Set up +account+ and +accounts+ attributes.
-      def set_up_subresources # :doc:
-        @accounts = Robinhood::REST::Accounts.new "/#{API_VERSION}/Accounts", self
-        @account = @accounts.get @account_sid
-      end
 
       ##
       # Builds up full request path
