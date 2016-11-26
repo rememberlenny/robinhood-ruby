@@ -10,8 +10,7 @@ describe Robinhood do
 
   describe "setup the robinhood object and" do
     it "fail without config params" do
-      @robinhood = Robinhood::REST::Client.new
-      expect(@robinhood).to eq nil
+      expect{ Robinhood::REST::Client.new }.to raise_error(ArgumentError)
     end
 
     it "access a username and password param" do
