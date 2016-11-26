@@ -1,9 +1,6 @@
 require "spec_helper"
 
 describe Robinhood do
-  let(:username) {"username"}
-  let(:password) {"password"}
-
   it "has a version number" do
     expect(Robinhood::VERSION).not_to be nil
   end
@@ -30,6 +27,8 @@ describe Robinhood do
   end
 
 
+  let(:username) {"username"}
+  let(:password) {"password"}
   describe "setup the Robinhood::Utils::ClientConfig" do
     Robinhood::Util::ClientConfig::DEFAULTS.each do |attribute, value|
       it "sets and attribune with a " + attribute.to_s + " value" do
