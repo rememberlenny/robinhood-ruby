@@ -3,6 +3,22 @@ require "robinhood/version"
 
 module Robinhood
   module Util
+    def url_encode(hash)
+      hash.to_a.map {|p| p.map {|e| CGI.escape get_string(e)}.join '='}.join '&'
+    end
+
+    def get_string(obj)
+      if obj.respond_to?(:strftime)
+        obj.strftime('%Y-%m-%d')
+      else
+        obj.to_s
+      end
+    end
+  end
+end
+
+module Robinhood
+  module Util
     class ClientConfig
       DEFAULTS = {
         host: 'api.robinhood.com',
@@ -28,10 +44,119 @@ module Robinhood
       end
     end
   end
+end
+
+module Robinhood
   module REST
-    class Client
-      include Twilio::Util
-      include Twilio::REST::Utils
+    class Client < BaseClient
+      API_VERSION = ""
+      attr_reader :account, :accounts
+
+      host 'api.robinhood.com'
+      
+
+      def initialize(*args)
+        super(*args)
+      end
+
+      def inspect # :nodoc:
+        "<Robinhood::REST::Client @account_sid=#{@account_sid}>"
+      end
+
+      ##
+      # Delegate account methods from the client. This saves having to call
+      # <tt>client.account</tt> every time for resources on the default
+      # account.
+      def method_missing(method_name, *args, &block)
+        if account.respond_to?(method_name)
+          account.send(method_name, *args, &block)
+        else
+          super
+        end
+      end
+
+      def respond_to?(method_name, include_private=false)
+        if account.respond_to?(method_name, include_private)
+          true
+        else
+          super
+        end
+      end
+
+      protected
+
+      ##
+      # Set up +account+ and +accounts+ attributes.
+      def set_up_subresources # :doc:
+        @accounts = Robinhood::REST::Accounts.new "/#{API_VERSION}/Accounts", self
+        @account = @accounts.get @account_sid
+      end
+
+      ##
+      # Builds up full request path
+      def build_full_path(path, params, method)
+        path = "#{path}.json"
+        path << "?#{url_encode(params)}" if method == :get && !params.empty?
+        path
+      end
+    end
+  end
+end
+
+module Robinhood
+  module REST
+    module Utils
+      def robinify(something)
+        return key_map(something, :robinify) if something.is_a? Hash
+        string = something.to_s
+        string.split('_').map do |string_part|
+          string_part[0,1].capitalize + string_part[1..-1]
+        end.join
+      end
+
+      def robinify(something)
+        return key_map(something, :robinify) if something.is_a? Hash
+        string = something.to_s
+        string = string[0,1].downcase + string[1..-1]
+        string.gsub(/[A-Z][a-z]*/) { |s| "_#{s.downcase}" }
+      end
+
+      protected
+
+      def resource(*resources)
+        custom_resource_names = { sms: 'SMS', sip: 'SIP' }
+        resources.each do |r|
+          resource = robinify r
+          relative_path = custom_resource_names.fetch(r, resource)
+          path = "#{@path}/#{relative_path}"
+          enclosing_module = if @submodule == nil
+            Robinhood::REST
+          else
+            Robinhood::REST.const_get(@submodule)
+          end
+          resource_class = enclosing_module.const_get resource
+          instance_variable_set("@#{r}", resource_class.new(path, @client))
+        end
+        self.class.instance_eval { attr_reader *resources }
+      end
+
+      private
+
+      def key_map(something, method)
+        something = something.to_a.flat_map do |pair|
+          [send(method, pair[0]).to_sym, pair[1]]
+        end
+        Hash[*something]
+      end
+    end
+  end
+end
+
+module Robinhood
+  module REST
+    class BaseClient
+      include Robinhood::Util
+      include Robinhood::REST::Utils
 
       HTTP_HEADERS = {
         'Accept' => '*/*',
@@ -72,13 +197,13 @@ module Robinhood
 
       ##
       # Define #get, #put, #post and #delete helper methods for sending HTTP
-      # requests to Twilio. You shouldn't need to use these methods directly,
+      # requests to Robinhood. You shouldn't need to use these methods directly,
       # but they can be useful for debugging. Each method returns a hash
       # obtained from parsing the JSON object in the response body.
       [:get, :put, :post, :delete].each do |method|
         method_class = Net::HTTP.const_get method.to_s.capitalize
         define_method method do |path, *args|
-          params = twilify(args[0])
+          params = robinify(args[0])
           params = {} if params.empty?
           # build the full path unless already given
           path = build_full_path(path, params, method) unless args[1]
