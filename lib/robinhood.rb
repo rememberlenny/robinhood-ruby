@@ -48,63 +48,6 @@ end
 
 module Robinhood
   module REST
-    class Client < BaseClient
-      API_VERSION = ""
-      attr_reader :account, :accounts
-
-      host 'api.robinhood.com'
-      
-
-      def initialize(*args)
-        super(*args)
-      end
-
-      def inspect # :nodoc:
-        "<Robinhood::REST::Client @account_sid=#{@account_sid}>"
-      end
-
-      ##
-      # Delegate account methods from the client. This saves having to call
-      # <tt>client.account</tt> every time for resources on the default
-      # account.
-      def method_missing(method_name, *args, &block)
-        if account.respond_to?(method_name)
-          account.send(method_name, *args, &block)
-        else
-          super
-        end
-      end
-
-      def respond_to?(method_name, include_private=false)
-        if account.respond_to?(method_name, include_private)
-          true
-        else
-          super
-        end
-      end
-
-      protected
-
-      ##
-      # Set up +account+ and +accounts+ attributes.
-      def set_up_subresources # :doc:
-        @accounts = Robinhood::REST::Accounts.new "/#{API_VERSION}/Accounts", self
-        @account = @accounts.get @account_sid
-      end
-
-      ##
-      # Builds up full request path
-      def build_full_path(path, params, method)
-        path = "#{path}.json"
-        path << "?#{url_encode(params)}" if method == :get && !params.empty?
-        path
-      end
-    end
-  end
-end
-
-module Robinhood
-  module REST
     module Utils
       def robinify(something)
         return key_map(something, :robinify) if something.is_a? Hash
@@ -294,6 +237,63 @@ module Robinhood
       def initialize(message, code=nil);
         super message
         @code = code
+      end
+    end
+  end
+end
+
+module Robinhood
+  module REST
+    class Client < BaseClient
+      API_VERSION = ""
+      attr_reader :account, :accounts
+
+      host 'api.robinhood.com'
+      
+
+      def initialize(*args)
+        super(*args)
+      end
+
+      def inspect # :nodoc:
+        "<Robinhood::REST::Client @account_sid=#{@account_sid}>"
+      end
+
+      ##
+      # Delegate account methods from the client. This saves having to call
+      # <tt>client.account</tt> every time for resources on the default
+      # account.
+      def method_missing(method_name, *args, &block)
+        if account.respond_to?(method_name)
+          account.send(method_name, *args, &block)
+        else
+          super
+        end
+      end
+
+      def respond_to?(method_name, include_private=false)
+        if account.respond_to?(method_name, include_private)
+          true
+        else
+          super
+        end
+      end
+
+      protected
+
+      ##
+      # Set up +account+ and +accounts+ attributes.
+      def set_up_subresources # :doc:
+        @accounts = Robinhood::REST::Accounts.new "/#{API_VERSION}/Accounts", self
+        @account = @accounts.get @account_sid
+      end
+
+      ##
+      # Builds up full request path
+      def build_full_path(path, params, method)
+        path = "#{path}.json"
+        path << "?#{url_encode(params)}" if method == :get && !params.empty?
+        path
       end
     end
   end
