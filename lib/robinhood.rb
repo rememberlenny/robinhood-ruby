@@ -39,7 +39,6 @@ module Robinhood
   end
 end
 
-
 module Robinhood
   module Util
     def url_encode(hash)
@@ -171,8 +170,6 @@ module Robinhood
         if @username.nil? || @password.nil?
           raise ArgumentError, 'Account username and password are required'
         end
-
-        @config.username = @username
 
         set_up_connection
         set_up_subresources
