@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 describe Robinhood::REST::Client do
-  let(:username) {"username"}
-  let(:password) {"password"}
-  describe "setup the Robinhood::REST::Client" do
+  describe 'config at class level' do
+    
+    after(:each) do
+      Robinhood.instance_variable_set('@configuration', nil)
+    end
+
     it "fail without config params" do
       expect{ Robinhood::REST::Client.new }.to raise_error(ArgumentError)
     end
