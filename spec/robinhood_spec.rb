@@ -1,6 +1,9 @@
 require "spec_helper"
 
 describe Robinhood do
+  let(:username) {"username"}
+  let(:password) {"password"}
+  
   it "has a version number" do
     expect(Robinhood::VERSION).not_to be nil
   end
@@ -15,7 +18,10 @@ describe Robinhood do
     end
 
     it "get the access token from the api" do
-      pending
+      FakeWeb.register_uri(:get, "https://api.robinhood.com/api-token-auth/", :body => {"token"=>"1234567890"})
+      @robinhood = Robinhood::REST::Client.new username, password 
+      expect(@token).to be_a String
+      expect(@token).to eq '1234567890'
     end
 
     it "store the access token as a local variable" do
