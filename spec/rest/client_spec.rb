@@ -25,9 +25,16 @@ describe Robinhood::REST::Client do
 
     it "get the access token from the api and store the access token as a local variable" do
       FakeWeb.register_uri(:get, "https://api.robinhood.com/api-token-auth/", :body => {"token"=>"1234567890"})
-      @robinhood = Robinhood::REST::Client.new(username, password)
-      expect(@robinhood.token).to be_a String
-      expect(@robinhood.token).to eq '1234567890'
+      
+      Robinhood.configure do |config|
+        config.username = 'someSid'
+        config.password = 'someToken'
+      end
+
+      client = Robinhood::REST::Client.new
+
+      expect(client.token).to be_a String
+      expect(client.token).to eq '1234567890'
     end
   end
 end
