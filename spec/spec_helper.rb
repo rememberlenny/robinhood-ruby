@@ -5,3 +5,4 @@ Coveralls.wear!
 
 require 'pry'
 require "robinhood"
+require 'fakeweb'
