@@ -9,7 +9,16 @@ require 'forwardable'
 require 'jwt'
 require 'singleton'
 
-require "robinhood/version"
+require "robinhood/version" unless defined?(Robinhood::VERSION)
+
+require 'robinhood/util'
+require 'robinhood/util/client_config'
+require 'robinhood/util/configuration'
+
+require 'robinhood/rest/errors'
+require 'robinhood/rest/utils'
+
+require 'robinhood/rest/client'
 
 module Robinhood
   extend SingleForwardable
@@ -29,30 +38,4 @@ module Robinhood
     @configuration ||= Util::Configuration.new
   end
   private_class_method :configuration
-end
-
-module Robinhood
-  module REST
-    class Client < BaseClient
-      API_VERSION = ""
-      attr_reader :account, :accounts
-
-      host 'api.robinhood.com'
-      
-
-      def initialize(*args)
-        super(*args)
-      end
-
-      protected
-
-      ##
-      # Builds up full request path
-      def build_full_path(path, params, method)
-        path = "#{path}.json"
-        path << "?#{url_encode(params)}" if method == :get && !params.empty?
-        path
-      end
-    end
-  end
 end
