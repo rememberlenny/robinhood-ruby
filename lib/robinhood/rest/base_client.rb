@@ -15,7 +15,7 @@ module Robinhood
       }
 
       ##
-      # Override the default host for a REST Client (api.twilio.com)
+      # Override the default host for a REST Client (api.robinhood.com)
       def self.host(host=nil)
         return @host unless host
         @host = host

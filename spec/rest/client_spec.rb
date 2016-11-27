@@ -58,5 +58,28 @@ describe Robinhood::REST::Client do
     it 'should throw an argument error if only the username is set' do
       expect { Robinhood::REST::Client.new 'someSid' }.to raise_error(ArgumentError)
     end
+
+    it 'should respond to fake token request' do
+      # url = "api.robinhood.com"
+      # FakeWeb.register_uri(:post, "http://" + url + "/api-token-auth/", :body => "Unauthorized", :status => ["401", "Unauthorized"])
+      # FakeWeb.register_uri(:post, "http://someSid:someToken@" + url + "/api-token-auth/", :body => "Authorized")
+      
+      # Robinhood.configure do |config|
+      #   config.username = 'someSid'
+      #   config.password = 'someToken'
+      # end
+
+      # client = Robinhood::REST::Client.new
+
+      # Net::HTTP.start(url) do |https|
+      #   req = Net::HTTP::Post.new("/api-token-auth/")
+      #   https.request(req)  # => "Unauthorized"
+      #   expect (https.request(req) ).to eq('Unauthorized')
+      #   req.basic_auth("someSid", "someToken")
+      #   https.request(req)  # => "Authorized"
+      #   expect (https.request(req) ).to eq('Authorized')
+      # end
+
+    end
   end
 end
