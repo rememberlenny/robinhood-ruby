@@ -28,13 +28,13 @@ describe Rack::RobinhoodWebhookAuthentication do
 
   describe 'calling against one path with dynamic auth token' do
     it 'should allow a request through if it validates' do
-      auth_token = 'qwerty'
-      account_sid = 12345
+      password = 'qwerty'
+      username = 12345
       expect_any_instance_of(Rack::Request).to receive(:post?).and_return(true)
-      expect_any_instance_of(Rack::Request).to receive(:POST).and_return({'username' => account_sid})
-      @middleware = Rack::RobinhoodWebhookAuthentication.new(@app, nil, /\/voice/) { |asid| auth_token}
+      expect_any_instance_of(Rack::Request).to receive(:POST).and_return({'username' => username})
+      @middleware = Rack::RobinhoodWebhookAuthentication.new(@app, nil, /\/voice/) { |asid| password}
       request_validator = double('RequestValidator')
-      expect(Robinhood::Util::RequestValidator).to receive(:new).with(auth_token).and_return(request_validator)
+      expect(Robinhood::Util::RequestValidator).to receive(:new).with(password).and_return(request_validator)
       expect(request_validator).to receive(:validate).and_return(true)
       request = Rack::MockRequest.env_for('/voice')
       status, headers, body = @middleware.call(request)
