@@ -14,11 +14,14 @@ require "robinhood/version" unless defined?(Robinhood::VERSION)
 require 'robinhood/util'
 require 'robinhood/util/client_config'
 require 'robinhood/util/configuration'
+require 'robinhood/util/request_validator'
 
 require 'robinhood/rest/errors'
 require 'robinhood/rest/utils'
 
 require 'robinhood/rest/client'
+
+require 'rack/robinhood_webhook_authentication'
 
 module Robinhood
   extend SingleForwardable
