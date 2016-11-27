@@ -2,9 +2,9 @@ module Robinhood
   module Util
     class RequestValidator
 
-      def initialize(auth_token = nil)
-        @auth_token = auth_token || Robinhood.auth_token
-        raise ArgumentError, 'Auth token is required' if @auth_token.nil?
+      def initialize(password = nil)
+        @password = password || Robinhood.password
+        raise ArgumentError, 'Auth token is required' if @password.nil?
       end
 
       def validate(url, params, signature)
@@ -15,7 +15,7 @@ module Robinhood
       def build_signature_for(url, params)
         data = url + params.sort.join
         digest = OpenSSL::Digest.new('sha1')
-        Base64.encode64(OpenSSL::HMAC.digest(digest, @auth_token, data)).strip
+        Base64.encode64(OpenSSL::HMAC.digest(digest, @password, data)).strip
       end
 
       private
