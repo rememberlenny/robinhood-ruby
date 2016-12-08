@@ -59,26 +59,32 @@ describe Robinhood::REST::Client do
       expect { Robinhood::REST::Client.new 'someSid' }.to raise_error(ArgumentError)
     end
 
+    it 'should not raise an error if the response body is empty' do
+      FakeWeb.register_uri(:any, %r/api\.robinhood\.com/, body: '')
+      robinhood = Robinhood::REST::Client.new('someSid', 'someToken')
+      robinhood.pry
+    end
+
     it 'should respond to fake token request' do
-      # url = "api.robinhood.com"
-      # FakeWeb.register_uri(:post, "http://" + url + "/api-token-auth/", :body => "Unauthorized", :status => ["401", "Unauthorized"])
-      # FakeWeb.register_uri(:post, "http://someSid:someToken@" + url + "/api-token-auth/", :body => "Authorized")
+      url = "api.robinhood.com"
+      FakeWeb.register_uri(:post, "http://" + url + "/api-token-auth/", :body => "Unauthorized", :status => ["401", "Unauthorized"])
+      FakeWeb.register_uri(:post, "http://someSid:someToken@" + url + "/api-token-auth/", :body => "Authorized")
       
-      # Robinhood.configure do |config|
-      #   config.username = 'someSid'
-      #   config.password = 'someToken'
-      # end
+      Robinhood.configure do |config|
+        config.username = 'someSid'
+        config.password = 'someToken'
+      end
 
-      # client = Robinhood::REST::Client.new
+      client = Robinhood::REST::Client.new
 
-      # Net::HTTP.start(url) do |https|
-      #   req = Net::HTTP::Post.new("/api-token-auth/")
-      #   https.request(req)  # => "Unauthorized"
-      #   expect (https.request(req) ).to eq('Unauthorized')
-      #   req.basic_auth("someSid", "someToken")
-      #   https.request(req)  # => "Authorized"
-      #   expect (https.request(req) ).to eq('Authorized')
-      # end
+      Net::HTTP.start(url) do |https|
+        req = Net::HTTP::Post.new("/api-token-auth/")
+        https.request(req)  # => "Unauthorized"
+        expect (https.request(req) ).to eq('Unauthorized')
+        req.basic_auth("someSid", "someToken")
+        https.request(req)  # => "Authorized"
+        expect (https.request(req) ).to eq('Authorized')
+      end
 
     end
   end
