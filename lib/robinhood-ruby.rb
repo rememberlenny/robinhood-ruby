@@ -14,6 +14,7 @@ require "robinhood-ruby"
 require "robinhood-ruby/util"
 require "robinhood-ruby/util/configuration"
 require "robinhood-ruby/util/request"
+require "robinhood-ruby/rest/endpoints"
 require "robinhood-ruby/rest/api"
 require "robinhood-ruby/rest/client"
 
