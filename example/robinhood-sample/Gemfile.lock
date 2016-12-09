@@ -1,7 +1,7 @@
 PATH
   remote: ../..
   specs:
-    robinhood (0.3.1)
+    robinhood-ruby (0.3.1)
       builder (>= 2.1.2)
       jwt (~> 1.0)
       multi_json (>= 1.3.0)
@@ -154,7 +154,7 @@ DEPENDENCIES
   jquery-rails
   pry
   rails (= 4.2.7.1)
-  robinhood!
+  robinhood-ruby!
   sass-rails (~> 5.0)
   sqlite3
   turbolinks

@@ -8,7 +8,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem "dotenv-rails", require: "dotenv/rails-now"
-gem "robinhood", path: "../.."
+gem "robinhood-ruby", path: "../.."
 
 group :development, :test do
   gem 'pry'
