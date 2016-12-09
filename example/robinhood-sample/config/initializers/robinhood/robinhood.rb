@@ -10,6 +10,7 @@ require 'jwt'
 require 'singleton'
 
 require 'robinhood/rest/client'
+require 'robinhood/util/request'
 
 module Robinhood
   extend SingleForwardable
