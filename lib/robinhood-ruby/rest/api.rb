@@ -147,10 +147,8 @@ module Robinhood
       end      
 
       def news(symbol)
-        url = URI(@api_url + @endpoints[:news] + symbol.to_s + "/")
-        response = http_request(url)
-        puts response.read_body
-        JSON.parse(response.read_body)
+        raw_response = HTTParty.get(endpoints[:news] + symbol.to_s + "/", headers: headers)
+        JSON.parse(raw_response.body)
       end      
 
       def markets
