@@ -1,4 +1,4 @@
-<h1><img src="https://raw.githubusercontent.com/rememberlenny/robinhood-node/master/.github/robinhood-node.png"/></h1>
+<h1><img src="https://raw.githubusercontent.com/rememberlenny/robinhood-ruby/master/.github/robinhood-ruby.png"/></h1>
 
 [![Coverage Status](https://coveralls.io/repos/github/rememberlenny/robinhood-ruby/badge.svg?branch=master)](https://coveralls.io/github/rememberlenny/robinhood-ruby?branch=master)
 
