@@ -70,17 +70,22 @@ module Robinhood
       @private[:username] = @options[:username];
       @private[:password] = @options[:password];
 
-      login
+      if @private[:auth_token].nil?
+        login
+      end
     end
 
-    def login
-      url = URI(@api_url + "api-token-auth/")
-
+    def http_request(url)
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-      request = Net::HTTP::Post.new(url)
+      request = prepare_request(url)
+
+      response = http.request(request)
+    end
+
+    def setup_headers(request)
       request["accept"] = '*/*'
       request["accept-encoding"] = 'gzip, deflate'
       request["accept-language"] = 'en;q=1, fr;q=0.9, de;q=0.8, ja;q=0.7, nl;q=0.6, it;q=0.5'
@@ -88,14 +93,39 @@ module Robinhood
       request["x-robinhood-api-version"] = '1.0.0'
       request["connection"] = 'keep-alive'
       request["user-agent"] = 'Robinhood/823 (iPhone; iOS 7.1.2; Scale/2.00)'
-      request["authorization"] = 'Basic cmVtZW1iZXJsZW5ueTpPbmx5RGVzdGlueTgh'
       request["cache-control"] = 'no-cache'
-      request["postman-token"] = 'c8c14c2c-af95-ade8-783d-b20565822cf5'
-      request.body = "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"username\"\r\n\r\n" + @private[:username] + "\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"password\"\r\n\r\n" + @private[:password] + "\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"\"\r\n\r\n\r\n-----011000010111000001101001--"
+      request
+    end
 
-      response = http.request(request)
+    def prepare_request(url)
+      if @private[:auth_token].nil?
+        request = Net::HTTP::Post.new(url)
+      else
+        request = Net::HTTP::Get.new(url)
+      end
+      request = setup_headers(request)
 
+      if @private[:auth_token].nil?
+        request["authorization"] = 'Basic cmVtZW1iZXJsZW5ueTpPbmx5RGVzdGlueTgh'
+        request.body = "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"username\"\r\n\r\n" + @private[:username] + "\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"password\"\r\n\r\n" + @private[:password] + "\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"\"\r\n\r\n\r\n-----011000010111000001101001--"
+      else
+        request["authorization"] = 'Token ' + @private[:auth_token].to_s
+        request.body = "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"username\"\r\n\r\n\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"password\"\r\n\r\n\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"\"\r\n\r\n\r\n-----011000010111000001101001--"
+      end
+      request
+    end
+
+    def login
+      url = URI(@api_url + "api-token-auth/")
+      response = http_request(url)
       @private[:auth_token] = JSON.parse(response.read_body)["token"]
+      account
+    end
+
+    def account
+      url = URI(@api_url + "accounts/")
+      response = http_request(url)
+      puts response.read_body
     end
   end
 end
