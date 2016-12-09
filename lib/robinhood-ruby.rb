@@ -7,6 +7,7 @@ require 'openssl'
 require 'base64'
 require 'forwardable'
 require 'singleton'
+require 'httparty'
 
 require 'robinhood-ruby/version' unless defined?(Robinhood::VERSION)
 require 'robinhood-ruby'
