@@ -131,14 +131,12 @@ module Robinhood
         response = http_request(url)
         puts response.read_body
       end
-    end
 
       def splits(instrument)
         url = URI(@api_url + @endpoints[:instruments] + "/splits/" + instrument.to_s)
         response = http_request(url)
         puts response.read_body
       end
-    end
 
       def historicals(symbol, intv, span)
         url = URI(@api_url + @endpoints[:quotes] + "historicals/" + symbol + "?interval" + intv.to_s + "&span=" + span)
@@ -147,11 +145,5 @@ module Robinhood
       end
     end
 
-      def positions(ticker)
-        url = URI(@api_url + @endpoints[:fundamentals] + "?symbols=" + ticker.to_s)
-        response = http_request(url)
-        puts response.read_body
-      end
-    end
   end
 end
