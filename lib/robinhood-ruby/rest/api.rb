@@ -11,7 +11,6 @@ module Robinhood
         JSON.parse(raw_response.body)
       end
 
-
       def fundamentals(ticker)
         raw_response = HTTParty.get(endpoints[:fundamentals], query: {'symbols' => ticker.upcase}, headers: headers)
         JSON.parse(raw_response.body)
@@ -193,6 +192,5 @@ module Robinhood
         JSON.parse(raw_response.body)
       end
     end
-
   end
 end

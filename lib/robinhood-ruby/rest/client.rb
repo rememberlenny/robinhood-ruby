@@ -16,7 +16,7 @@ module Robinhood
         
         setup_headers
         configuration
-        setup
+        login
       end
 
       def inspect # :nodoc:
@@ -82,7 +82,7 @@ module Robinhood
       end
 
       def configuration()
-        @api_url = 'https://api.robinhood.com/';
+        @api_url = 'https://api.robinhood.com/'
 
         @is_init = false
         
@@ -96,15 +96,6 @@ module Robinhood
         }
 
         @api = {}
-      end
-
-      def setup
-        @private[:username] = @options[:username];
-        @private[:password] = @options[:password];
-
-        if @private[:auth_token].nil?
-          login
-        end
       end
 
       def http_request(url)
@@ -125,25 +116,32 @@ module Robinhood
       end
 
       def login
-        raw_response = HTTParty.post(
-          endpoints[:login],
-          body: {
-            'password' => @private[:password],
-            'username'=> @private[:username]
-          }.as_json,
-          headers: headers
-        )
-        response = JSON.parse(raw_response.body)
-        
-        if response["non_field_errors"]
-          puts response["non_field_errors"]
-          false
-        elsif response["token"]
-          @private[:auth_token] = JSON.parse(response.read_body)["token"]
-          @headers["Authorization"] = "Token " + @private[:auth_token].to_s
-          @private[:account] = account["results"][0]["url"]
+        @private[:username] = @options[:username]
+        @private[:password] = @options[:password]
+
+        if @private[:auth_token].nil?
+          raw_response = HTTParty.post(
+            endpoints[:login],
+            body: {
+              'password' => @private[:password],
+              'username'=> @private[:username]
+            }.as_json,
+            headers: headers
+          )
+          response = JSON.parse(raw_response.body)
+
+          if response["non_field_errors"]
+            puts response["non_field_errors"]
+            false
+          elsif response["token"]
+            @private[:auth_token] = JSON.parse(response.read_body)["token"]
+            @headers["Authorization"] = "Token " + @private[:auth_token].to_s
+            @private[:account] = account["results"][0]["url"]
+          end
+
         end
       end
+      
     end
   end
 end
