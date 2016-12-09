@@ -12,17 +12,17 @@ module Robinhood
       end
 
       def fundamentals(ticker)
-        raw_response = HTTParty.get(endpoints[:fundamentals], query: {'symbols' => ticker.upcase}, headers: headers)
+        raw_response = HTTParty.get(endpoints[:fundamentals], query: {"symbols" => ticker.upcase}, headers: headers)
         JSON.parse(raw_response.body)
       end
 
       def instruments(symbol)
-        raw_response = HTTParty.get(endpoints[:instruments], query: {'query' => symbol.upcase}, headers: headers)
+        raw_response = HTTParty.get(endpoints[:instruments], query: {"query" => symbol.upcase}, headers: headers)
         JSON.parse(raw_response.body)
       end
 
       def quote_data(symbol)
-        raw_response = HTTParty.post("https://api.robinhood.com/quotes/#{symbol}/", headers: headers)
+        raw_response = HTTParty.post(@api_url + "quotes/#{symbol}/", headers: headers)
         JSON.parse(raw_response.body)
       end
 
@@ -45,15 +45,15 @@ module Robinhood
         raw_response = HTTParty.post(
           endpoints[:orders],
           body: {
-            'account' => @private.account,
-            'instrument' => "https://api.robinhood.com/instruments/#{instrument_id}/",
-            'price' => price,
-            'quantity' => quantity,
-            'side' => "buy",
-            'symbol' => symbol,
-            'time_in_force' => 'gfd',
-            'trigger' => 'immediate',
-            'type' => 'market'
+            "account" => @private.account,
+            "instrument" => @api_url + "instruments/#{instrument_id}/",
+            "price" => price,
+            "quantity" => quantity,
+            "side" => "buy",
+            "symbol" => symbol,
+            "time_in_force" => "gfd",
+            "trigger" => "immediate",
+            "type" => "market"
           }.as_json,
           headers: headers
         )
@@ -63,15 +63,15 @@ module Robinhood
         raw_response = HTTParty.post(
           endpoints[:orders],
           body: {
-            'account' => @private.account,
-            'instrument' => "https://api.robinhood.com/instruments/#{instrument_id}/",
-            'price' => price,
-            'quantity' => quantity,
-            'side' => "buy",
-            'symbol' => symbol,
-            'time_in_force' => 'gfd',
-            'trigger' => 'immediate',
-            'type' => 'limit'
+            "account" => @private.account,
+            "instrument" => @api_url + "instruments/#{instrument_id}/",
+            "price" => price,
+            "quantity" => quantity,
+            "side" => "buy",
+            "symbol" => symbol,
+            "time_in_force" => "gfd",
+            "trigger" => "immediate",
+            "type" => "limit"
           }.as_json,
           headers: headers
         )
@@ -81,15 +81,15 @@ module Robinhood
         raw_response = HTTParty.post(
           endpoints[:orders],
           body: {
-            'account' => @private.account,
-            'instrument' => "https://api.robinhood.com/instruments/#{instrument_id}/",
-            'price' => price,
-            'quantity' => quantity,
-            'side' => "sell",
-            'symbol' => symbol,
-            'time_in_force' => 'gfd',
-            'trigger' => 'immediate',
-            'type' => 'market'
+            "account" => @private.account,
+            "instrument" => @api_url + "instruments/#{instrument_id}/",
+            "price" => price,
+            "quantity" => quantity,
+            "side" => "sell",
+            "symbol" => symbol,
+            "time_in_force" => "gfd",
+            "trigger" => "immediate",
+            "type" => "market"
           }.as_json,
           headers: headers
         )
@@ -99,15 +99,15 @@ module Robinhood
         raw_response = HTTParty.post(
           endpoints[:orders],
           body: {
-            'account' => @private.account,
-            'instrument' => "https://api.robinhood.com/instruments/#{instrument_id}/",
-            'price' => price,
-            'quantity' => quantity,
-            'side' => "sell",
-            'symbol' => symbol,
-            'time_in_force' => 'gfd',
-            'trigger' => 'immediate',
-            'type' => 'limit'
+            "account" => @private.account,
+            "instrument" => @api_url + "instruments/#{instrument_id}/",
+            "price" => price,
+            "quantity" => quantity,
+            "side" => "sell",
+            "symbol" => symbol,
+            "time_in_force" => "gfd",
+            "trigger" => "immediate",
+            "type" => "limit"
           }.as_json,
           headers: headers
         )
@@ -117,22 +117,22 @@ module Robinhood
         raw_response = HTTParty.post(
           endpoints[:orders],
           body: {
-            'account' => @private.account,
-            'instrument' => "https://api.robinhood.com/instruments/#{instrument_id}/",
-            'stop_price' => price,
-            'quantity' => quantity,
-            'side' => "sell",
-            'symbol' => symbol,
-            'time_in_force' => 'gtc',
-            'trigger' => 'stop',
-            'type' => 'market'
+            "account" => @private.account,
+            "instrument" => @api_url + "instruments/#{instrument_id}/",
+            "stop_price" => price,
+            "quantity" => quantity,
+            "side" => "sell",
+            "symbol" => symbol,
+            "time_in_force" => "gtc",
+            "trigger" => "stop",
+            "type" => "market"
           }.as_json,
           headers: headers
         )
       end
 
       def cancel_order(order_id)
-        raw_response = HTTParty.post("https://api.robinhood.com/orders/#{order_id}/cancel/", headers: headers)
+        raw_response = HTTParty.post(@api_url + "orders/#{order_id}/cancel/", headers: headers)
         raw_response.code == 200
       end
 
@@ -186,7 +186,7 @@ module Robinhood
       end
 
       def historicals(symbol, intv, span)
-        raw_response = HTTParty.get(endpoints[:quotes] + "historicals/" + symbol, query: {'interval' => intv.to_s, 'span' => span}, headers: headers)
+        raw_response = HTTParty.get(endpoints[:quotes] + "historicals/" + symbol, query: {"interval" => intv.to_s, "span" => span}, headers: headers)
         JSON.parse(raw_response.body)
       end
     end

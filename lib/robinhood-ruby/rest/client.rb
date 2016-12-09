@@ -11,7 +11,7 @@ module Robinhood
         @options[:username] = (args.size > 2 && args[2].is_a?(String) ? args[2] : args[0]) || Robinhood.username
 
         if @options[:username].nil? || @options[:password].nil?
-          raise ArgumentError, 'Account username and password are required'
+          raise ArgumentError, "Account username and password are required"
         end
         
         setup_headers
@@ -45,44 +45,44 @@ module Robinhood
 
       def endpoints
         {
-          login:                    'https://api.robinhood.com/api-token-auth/',
-          investment_profile:       'https://api.robinhood.com/user/investment_profile/',
-          accounts:                 'https://api.robinhood.com/accounts/',
-          ach_iav_auth:             'https://api.robinhood.com/ach/iav/auth/',
-          ach_relationships:        'https://api.robinhood.com/ach/relationships/',
-          ach_transfers:            'https://api.robinhood.com/ach/transfers/',
-          ach_deposit_schedules:    "https://api.robinhood.com/ach/deposit_schedules/",
-          applications:             'https://api.robinhood.com/applications/',
-          dividends:                'https://api.robinhood.com/dividends/',
-          edocuments:               'https://api.robinhood.com/documents/',
-          instruments:              'https://api.robinhood.com/instruments/',
-          margin_upgrade:           'https://api.robinhood.com/margin/upgrades/',
-          markets:                  'https://api.robinhood.com/markets/',
-          notifications:            'https://api.robinhood.com/notifications/',
-          notifications_devices:    "https://api.robinhood.com/notifications/devices/",
-          orders:                   'https://api.robinhood.com/orders/',
-          cancel_order:             'https://api.robinhood.com/orders/',
-          password_reset:           'https://api.robinhood.com/password_reset/request/',
-          quotes:                   'https://api.robinhood.com/quotes/',
-          document_requests:        'https://api.robinhood.com/upload/document_requests/',
-          user:                     'https://api.robinhood.com/user/',
+          login:                    @api_url + "api-token-auth/",
+          investment_profile:       @api_url + "user/investment_profile/",
+          accounts:                 @api_url + "accounts/",
+          ach_iav_auth:             @api_url + "ach/iav/auth/",
+          ach_relationships:        @api_url + "ach/relationships/",
+          ach_transfers:            @api_url + "ach/transfers/",
+          ach_deposit_schedules:    @api_url + "ach/deposit_schedules/",
+          applications:             @api_url + "applications/",
+          dividends:                @api_url + "dividends/",
+          edocuments:               @api_url + "documents/",
+          instruments:              @api_url + "instruments/",
+          margin_upgrade:           @api_url + "margin/upgrades/",
+          markets:                  @api_url + "markets/",
+          notifications:            @api_url + "notifications/",
+          notifications_devices:    @api_url + "notifications/devices/",
+          orders:                   @api_url + "orders/",
+          cancel_order:             @api_url + "orders/",
+          password_reset:           @api_url + "password_reset/request/",
+          quotes:                   @api_url + "quotes/",
+          document_requests:        @api_url + "upload/document_requests/",
+          user:                     @api_url + "user/",
     
-          user_additional_info:     "https://api.robinhood.com/user/additional_info/",
-          user_basic_info:          "https://api.robinhood.com/user/basic_info/",
-          user_employment:          "https://api.robinhood.com/user/employment/",
-          user_investment_profile:  "https://api.robinhood.com/user/investment_profile/",
+          user_additional_info:     @api_url + "user/additional_info/",
+          user_basic_info:          @api_url + "user/basic_info/",
+          user_employment:          @api_url + "user/employment/",
+          user_investment_profile:  @api_url + "user/investment_profile/",
 
-          watchlists:               'https://api.robinhood.com/watchlists/',
-          positions:                'https://api.robinhood.com/positions/',
-          fundamentals:             'https://api.robinhood.com/fundamentals/',
-          sp500_up:                 'https://api.robinhood.com/midlands/movers/sp500/?direction=up',
-          sp500_down:               'https://api.robinhood.com/midlands/movers/sp500/?direction=down',
-          news:                     'https://api.robinhood.com/midlands/news/'
+          watchlists:               @api_url + "watchlists/",
+          positions:                @api_url + "positions/",
+          fundamentals:             @api_url + "fundamentals/",
+          sp500_up:                 @api_url + "midlands/movers/sp500/?direction=up",
+          sp500_down:               @api_url + "midlands/movers/sp500/?direction=down",
+          news:                     @api_url + "midlands/news/"
         }
       end
 
       def configuration()
-        @api_url = 'https://api.robinhood.com/'
+        @api_url = "https://api.robinhood.com/"
 
         @is_init = false
         
@@ -97,21 +97,16 @@ module Robinhood
 
         @api = {}
       end
-
-      def http_request(url)
-        request = Util::Request.new(@private)
-        request.http_request(url)
-      end
      
       def setup_headers
         @headers ||= {
-          'Accept' => '*/*',
-          'Accept-Encoding' => 'gzip, deflate',
-          'Accept-Language' => 'en;q=1, fr;q=0.9, de;q=0.8, ja;q=0.7, nl;q=0.6, it;q=0.5',
-          'Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8',
-          'X-Robinhood-API-Version' => '1.0.0',
-          'Connection' => 'keep-alive',
-          'User-Agent' => 'Robinhood/823 (iPhone; iOS 7.1.2; Scale/2.00)',
+          "Accept" => "*/*",
+          "Accept-Encoding" => "gzip, deflate",
+          "Accept-Language" => "en;q=1, fr;q=0.9, de;q=0.8, ja;q=0.7, nl;q=0.6, it;q=0.5",
+          "Content-Type" => "application/x-www-form-urlencoded; charset=utf-8",
+          "X-Robinhood-API-Version" => "1.0.0",
+          "Connection" => "keep-alive",
+          "User-Agent" => "Robinhood/823 (iPhone; iOS 7.1.2; Scale/2.00)",
         }
       end
 
@@ -123,8 +118,8 @@ module Robinhood
           raw_response = HTTParty.post(
             endpoints[:login],
             body: {
-              'password' => @private[:password],
-              'username'=> @private[:username]
+              "password" => @private[:password],
+              "username" => @private[:username]
             }.as_json,
             headers: headers
           )
@@ -141,7 +136,7 @@ module Robinhood
 
         end
       end
-      
+
     end
   end
 end
