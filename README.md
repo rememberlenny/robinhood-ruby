@@ -493,7 +493,26 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 Bug reports and pull requests are welcome on GitHub at https://github.com/rememberlenny/robinhood-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
+# Contributors
+
+Lenny Bogdonoff ([@rememberlenny](https://github.com/rememberlenny))
+------------------
+* Alejandro U. Alvarez ([@aurbano](https://github.com/aurbano))
+* Jesse Spencer ([@Jspenc72](https://github.com/jspenc72))
+* Justin Keller ([@nodesocket](https://github.com/nodesocket))
+* Wei-Sheng Su ([@ted7726](https://github.com/ted7726))
+* Dustin Moore ([@dustinmoorenet](https://github.com/dustinmoorenet))
+* Alex Ryan ([@ialexryan](https://github.com/ialexryan))
+* Ben Van Treese ([@vantreeseba](https://github.com/vantreeseba))
+* Zaheen ([@z123](https://github.com/z123))
+* Chris Busse ([@busse](https://github.com/busse))
+* Jason Truluck ([@jasontruluck](https://github.com/jasontruluck))
+
+------------------
+
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
+> Even though this should be obvious: I am not affiliated in any way with Robinhood Financial LLC. I don't mean any harm or disruption in their service by providing this. Furthermore, I believe they are working on an amazing product, and hope that by publishing this NodeJS framework their users can benefit in even more ways from working with them.
