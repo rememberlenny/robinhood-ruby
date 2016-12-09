@@ -113,7 +113,7 @@ module Robinhood
         url = URI(@api_url + "api-token-auth/")
         response = http_request(url)
         @private[:auth_token] = JSON.parse(response.read_body)["token"]
-        account
+        @private[:account] = account["results"][0]["url"]
       end
     end
   end
