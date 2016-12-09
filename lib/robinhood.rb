@@ -8,6 +8,7 @@ require 'base64'
 require 'forwardable'
 require 'singleton'
 
+require 'robinhood/version' unless defined?(Robinhood::VERSION)
 require 'robinhood'
 require 'robinhood/util'
 require 'robinhood/util/configuration'
