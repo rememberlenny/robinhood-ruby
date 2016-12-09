@@ -1,5 +1,7 @@
 <h1><img src="https://raw.githubusercontent.com/rememberlenny/robinhood-ruby/master/.github/robinhood-ruby.png"/></h1>
 
+[![Dependency Status](https://gemnasium.com/badges/github.com/rememberlenny/robinhood-ruby.svg)](https://gemnasium.com/github.com/rememberlenny/robinhood-ruby)
+[![Build Status](https://travis-ci.org/rememberlenny/robinhood-ruby.svg?branch=master)](https://travis-ci.org/rememberlenny/robinhood-ruby)
 [![Coverage Status](https://coveralls.io/repos/github/rememberlenny/robinhood-ruby/badge.svg?branch=master)](https://coveralls.io/github/rememberlenny/robinhood-ruby?branch=master)
 
 # robinhood-ruby
