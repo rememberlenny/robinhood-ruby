@@ -1,7 +1,7 @@
 PATH
   remote: ../..
   specs:
-    robinhood-ruby (0.4.2)
+    robinhood-ruby (0.4.3)
       builder (>= 2.1.2)
       httparty
       jwt (~> 1.0)
