@@ -4,5 +4,5 @@ require 'coveralls'
 Coveralls.wear!
 
 require 'pry'
-require "robinhood"
+require "robinhood-ruby"
 require 'fakeweb'
