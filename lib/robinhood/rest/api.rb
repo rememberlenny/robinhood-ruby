@@ -20,7 +20,7 @@ module Robinhood
       end
 
       def instruments(symbol)
-        url = URI(@api_url + @endpoints[:fundamentals] + "?query=" + symbol.to_s)
+        url = URI(@api_url + @endpoints[:instruments] + "?query=" + symbol.to_s)
         response = http_request(url)
         puts response.read_body
       end
@@ -94,7 +94,7 @@ module Robinhood
       end      
 
       def news(symbol)
-        url = URI(@api_url + @endpoints[:news] + "/" + symbol.to_s)
+        url = URI(@api_url + @endpoints[:news] + symbol.to_s + "/")
         response = http_request(url)
         puts response.read_body
       end      
