@@ -1,8 +1,8 @@
-# Robinhood
-
 [![Coverage Status](https://coveralls.io/repos/github/rememberlenny/robinhood-ruby/badge.svg?branch=master)](https://coveralls.io/github/rememberlenny/robinhood-ruby?branch=master)
 
-RubyGem Framework to make trades with the private Robinhood API. Using this API is not encouraged, since it's not officially available and it has been reverse engineered. See [@Sanko's](https://github.com/Sanko) [Unofficial Documentation](https://github.com/sanko/Robinhood) for more information.
+# robinhood-ruby
+
+A module to make trades with the private Robinhood API. Using this API is not encouraged, since it's not officially available and it has been reverse engineered. See [@Sanko's](https://github.com/Sanko) [Unofficial Documentation](https://github.com/sanko/Robinhood) for more information.
 
 FYI [Robinhood's Terms and Conditions](https://brokerage-static.s3.amazonaws.com/assets/robinhood/legal/Robinhood%20Terms%20and%20Conditions.pdf)
 
@@ -62,8 +62,15 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-# The username and password you use to sign into the robinhood app.
 
+require 'rubygems' # not necessary with ruby 1.9 but included for completeness
+require 'twilio-ruby' # if not loaded through Gemfile
+
+# The username and password you use to sign into the robinhood app.
+username = 'username'
+password = 'password'
+
+# set up a client to talk to the Robinhood REST API
 @robinhood = Robinhood::REST::Client(username, password)
 
 ```
@@ -483,7 +490,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/robinhood. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/rememberlenny/robinhood-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
