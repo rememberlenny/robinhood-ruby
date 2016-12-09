@@ -12,6 +12,7 @@ require 'robinhood'
 require 'robinhood/util'
 require 'robinhood/util/configuration'
 require 'robinhood/util/request'
+require 'robinhood/rest/api'
 require 'robinhood/rest/client'
 
 module Robinhood

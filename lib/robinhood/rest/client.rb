@@ -1,11 +1,9 @@
 module Robinhood
   module REST
-    class Client
+    class Client < API
       attr_accessor :token, :api_url, :options, :endpoints, :private
 
       def initialize(*args)
-        super(*args)
-
         @options = args.last.is_a?(Hash) ? args.pop : {}
 
         @options[:username] = args[0] || Robinhood.username
@@ -116,12 +114,6 @@ module Robinhood
         response = http_request(url)
         @private[:auth_token] = JSON.parse(response.read_body)["token"]
         account
-      end
-
-      def account
-        url = URI(@api_url + "accounts/")
-        response = http_request(url)
-        puts response.read_body
       end
     end
   end
