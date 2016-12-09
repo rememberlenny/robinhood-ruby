@@ -132,7 +132,7 @@ Get the user's instruments for a specified stock.
 
 Get the user's quote data for a specified stock.
 
-    ```ruby
+```ruby
     @robinhood = Robinhood::REST::Client(username, password)
     quote_data = @robinhood.quote_data('AAPL')
     puts(quote_data)
@@ -159,7 +159,7 @@ Get the user's quote data for a specified stock.
 
 ### `accounts`
 
-    ```ruby
+```ruby
     @robinhood = Robinhood::REST::Client(username, password)
     accounts = @robinhood.accounts
             puts(accounts)
@@ -198,7 +198,7 @@ Get the user's accounts.
 ### `user`
 Get the user information.
 
-    ```ruby
+```ruby
     @robinhood = Robinhood::REST::Client(username, password)
     user = @robinhood.user
     puts(user)
@@ -207,7 +207,7 @@ Get the user information.
 ### `dividends`
 
 Get the user's dividends information.
-    ```ruby
+```ruby
     @robinhood = Robinhood::REST::Client(username, password)
     dividends = @robinhood.dividends
     puts(dividends)
@@ -217,7 +217,7 @@ Get the user's dividends information.
 ### `orders`
 
 Get the user's orders information.
-    ```ruby
+```ruby
     @robinhood = Robinhood::REST::Client(username, password)
     orders = @robinhood.orders
     puts(orders)
@@ -226,7 +226,7 @@ Get the user's orders information.
 
 Place a buy order on a specified stock.
 
-    ```ruby
+```ruby
     @robinhood = Robinhood::REST::Client(username, password)
         options = {
         "type": 'limit',
@@ -321,7 +321,7 @@ Get fundamental data about a symbol.
 
 An object containing information about the symbol:
 
-    ```ruby
+```ruby
     @robinhood = Robinhood::REST::Client(username, password)
     fundamentals = @robinhood.fundamentals("SBPH")
     puts(fundamentals)
@@ -344,7 +344,7 @@ An object containing information about the symbol:
 ```
 
 ### `watchlists(name)`
-    ```ruby
+```ruby
     @robinhood = Robinhood::REST::Client(username, password)
     watchlists = @robinhood.watchlists
     puts(watchlists)
@@ -371,7 +371,7 @@ An object containing information about the symbol:
 ```
 
 ### `sp500_up`
-    ```ruby
+```ruby
     @robinhood = Robinhood::REST::Client(username, password)
     sp500_up = @robinhood.sp500_up
     puts(sp500_up)
@@ -394,7 +394,7 @@ An object containing information about the symbol:
 ```
 
 ### `sp500_down`
-    ```ruby
+```ruby
     @robinhood = Robinhood::REST::Client(username, password)
     sp500_down = @robinhood.sp500_down
     puts(sp500_down)
@@ -418,7 +418,7 @@ An object containing information about the symbol:
 ```
 ### `splits(instrument)`
 
-    ```ruby
+```ruby
     @robinhood = Robinhood::REST::Client(username, password)
     splits = @robinhood.splits("7a3a677d-1664-44a0-a94b-3bb3d64f9e20")
     puts("splits")
@@ -426,7 +426,7 @@ An object containing information about the symbol:
 
 ### `historicals(symbol, intv, span)`    
 
-    ```ruby
+```ruby
 
     # {interval=5minute|10minute (required) span=week|day| }
     @robinhood = Robinhood::REST::Client(username, password)
