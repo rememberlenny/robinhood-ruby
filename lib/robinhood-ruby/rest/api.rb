@@ -190,6 +190,8 @@ module Robinhood
         JSON.parse(raw_response.body)
       end
      
+      private
+
       def headers
         Client.headers
       end
