@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'robinhood/version'
+require 'robinhood-ruby/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "robinhood"
+  spec.name          = "robinhood-ruby"
   spec.version       = Robinhood::VERSION
   spec.authors       = ["Leonard Bogdonoff"]
   spec.email         = ["rememberlenny@gmail.com"]
 
   spec.summary       = "A simple library for communicating with the Robinhood API"
   spec.description   = "A simple library for communicating with the Robinhood API"
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/rememberlenny/robinhood-ruby"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

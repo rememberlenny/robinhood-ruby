@@ -8,13 +8,13 @@ require 'base64'
 require 'forwardable'
 require 'singleton'
 
-require 'robinhood/version' unless defined?(Robinhood::VERSION)
-require 'robinhood'
-require 'robinhood/util'
-require 'robinhood/util/configuration'
-require 'robinhood/util/request'
-require 'robinhood/rest/api'
-require 'robinhood/rest/client'
+require 'robinhood-ruby/version' unless defined?(Robinhood::VERSION)
+require 'robinhood-ruby'
+require 'robinhood-ruby/util'
+require 'robinhood-ruby/util/configuration'
+require 'robinhood-ruby/util/request'
+require 'robinhood-ruby/rest/api'
+require 'robinhood-ruby/rest/client'
 
 module Robinhood
   extend SingleForwardable

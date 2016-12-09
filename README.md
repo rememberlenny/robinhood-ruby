@@ -48,7 +48,7 @@ FYI [Robinhood's Terms and Conditions](https://brokerage-static.s3.amazonaws.com
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'robinhood'
+gem 'robinhood-ruby'
 ```
 
 And then execute:
@@ -57,14 +57,14 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install robinhood
+    $ gem install robinhood-ruby
 
 ## Usage
 
 ```ruby
 
 require 'rubygems' # not necessary with ruby 1.9 but included for completeness
-require 'twilio-ruby' # if not loaded through Gemfile
+require 'robinhood-ruby' # if not loaded through Gemfile
 
 # The username and password you use to sign into the robinhood app.
 username = 'username'
@@ -495,7 +495,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/rememb
 
 # Contributors
 
-Lenny Bogdonoff ([@rememberlenny](https://github.com/rememberlenny))
+Leonard Bogdonoff ([@rememberlenny](https://github.com/rememberlenny))
 ------------------
 * Alejandro U. Alvarez ([@aurbano](https://github.com/aurbano))
 * Jesse Spencer ([@Jspenc72](https://github.com/jspenc72))
