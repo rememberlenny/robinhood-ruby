@@ -22,7 +22,7 @@ module Robinhood
       end
 
       def quote_data(symbol)
-        raw_response = HTTParty.post(@api_url + "quotes/#{symbol}/", headers: headers)
+        raw_response = HTTParty.get(@api_url + "quotes/#{symbol}/", headers: headers)
         JSON.parse(raw_response.body)
       end
 
