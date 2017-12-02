@@ -75,7 +75,7 @@ username = 'username'
 password = 'password'
 
 # set up a client to talk to the Robinhood REST API
-@robinhood = Robinhood::REST::Client(username, password)
+@robinhood = Robinhood::REST::Client.new(username, password)
 
 ```
 
@@ -88,7 +88,7 @@ Before using these methods, make sure you have initialized Robinhood using the s
 Get the current user's investment profile.
 
 ```ruby
-    @robinhood = Robinhood::REST::Client(username, password)
+    @robinhood = Robinhood::REST::Client.new(username, password)
     investment_profile = @robinhood.investment_profile
     puts(investment_profile)
 
@@ -471,7 +471,7 @@ An object containing information about the symbol:
     #         ... 290 more items
     #      ]}
     #    }
-    
+
 ```
 
 ### `url(url)`
