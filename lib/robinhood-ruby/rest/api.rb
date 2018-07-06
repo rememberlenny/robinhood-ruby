@@ -185,10 +185,14 @@ module Robinhood
         JSON.parse(raw_response.body)
       end
 
-      def historicals(symbol, intv, span)
-        raw_response = HTTParty.get(endpoints[:quotes] + "historicals/" + symbol, query: {"interval" => intv.to_s, "span" => span}, headers: headers)
-        p raw_response
-        byebug
+      # GET /quotes/historicals/$symbol/[?interval=$i&span=$s&bounds=$b] interval=week|day|10minute|5minute|null(all) span=day|week|year|5year|all bounds=extended|regular|trading
+      # only certain combos work, such as:
+      # get_history :AAPL, "5minute", {span: "day"}
+      # get_history :AAPL, "10minute", {span: "week"}
+      # get_history :AAPL, "day", {span: "year"}
+      # get_history :AAPL, "week", {span: "5year"}
+      def historicals(symbol, intv)
+        raw_response = HTTParty.get(endpoints[:quotes] + "historicals/#{symbol}/?interval=#{intv}", headers: headers)
         JSON.parse(raw_response.body)
       end
      
