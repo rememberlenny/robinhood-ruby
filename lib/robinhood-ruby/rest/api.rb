@@ -13,8 +13,6 @@ module Robinhood
 
       def fundamentals(ticker)
         raw_response = HTTParty.get(endpoints[:fundamentals], query: {"symbols" => ticker.upcase}, headers: headers)
-        p raw_response
-        byebug
         JSON.parse(raw_response.body)
       end
 
@@ -189,6 +187,8 @@ module Robinhood
 
       def historicals(symbol, intv, span)
         raw_response = HTTParty.get(endpoints[:quotes] + "historicals/" + symbol, query: {"interval" => intv.to_s, "span" => span}, headers: headers)
+        p raw_response
+        byebug
         JSON.parse(raw_response.body)
       end
      
