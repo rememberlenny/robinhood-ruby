@@ -435,13 +435,13 @@ An object containing information about the symbol:
     puts("splits")
 ```
 
-### `historicals(symbol, intv, span)`    
+### `historicals(symbol, intv)`    
 
 ```ruby
 
     # {interval=5minute|10minute (required) span=week|day| }
     @robinhood = Robinhood::REST::Client(username, password)
-    historicals = @robinhood.historicals("AAPL", '5minute', 'week')
+    historicals = @robinhood.historicals("AAPL", '5minute')
     puts(historicals)
 
     #             
